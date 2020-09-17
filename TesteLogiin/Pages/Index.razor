@@ -1,0 +1,29 @@
+﻿
+@page "/"
+
+
+
+<h1> BEM VINDO ao Sistema de Teste</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <p>Bem vindo  @context.User.Identity.Name! </p>
+
+    </Authorized>
+    <NotAuthorized>
+        <div>
+            <p>Realize Login para continuar navegando</p>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/Identity/Account/Login">Login</a>
+                </li>
+            </ul>
+            <p> Ou realize seu cadastro</p>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/Identity/Account/Register">Registrar</a>
+                </li>
+            </ul>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>

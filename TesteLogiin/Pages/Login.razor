@@ -1,0 +1,84 @@
+﻿@using System.Windows.Input;
+@page "/Login";
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<AuthorizeView>
+    <NotAuthorized>
+
+        <h3>Login</h3>
+        <div>
+            <form>
+                <div>
+                    <label style="margin-right:2px">Login</label>
+                    <input placeholder="Insira seu usuário" size="20" required @bind="User" />
+                </div>
+                <div>
+                    <label size="20">Senha</label>
+                    <input placeholder="Insira sua senha" size="20" required @bind="Pass" />
+                </div>
+                <div>
+                    <Blazorise.Button CommandParameter="new Command(User,Pass)" Color="Blazorise.Color.Primary">TESTE</Blazorise.Button>
+                </div>
+            </form>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+
+    private string User;
+    private string Pass;
+
+
+
+    public class Command : ICommand
+    {
+        private bool _canExecute = false;
+        public event EventHandler CanExecuteChanged;
+
+        public Command(string user, string pass)
+        {
+            object b;
+            b = pass;
+            if (CanExecute(user, pass))
+                Execute(user, pass);
+        }
+        public bool CanExecute(string user, string pass)
+        {
+            return (user != null && pass != null) ? true : false;
+        }
+
+
+
+
+        public bool Execute(string user, string pass)
+        {
+            if (user != null && pass != null)
+            {
+                pass = "123456";
+                IdentityUser identity = new IdentityUser("moregola@gmail.com");
+                identity.PasswordHash = pass;
+                identity.Email = "moregola@gmail.com";
+
+            }
+            return true;
+
+        }
+        public bool CanExecute(object b)
+        {
+            return true;
+        }
+
+        public void Execute(object b)
+        {
+
+        }
+
+    }
+
+}

@@ -1,0 +1,59 @@
+﻿@using TesteLogiin.DataModel;
+@using TesteLogiin.Service;
+@using TesteLogiin.Service.Contracts;
+@using Blazorise.DataGrid;
+@using System.Windows.Input;
+@inject IRequestProcessor _request;
+
+
+@page "/DataShow"
+@attribute [Authorize]
+
+<AuthorizeView>
+    <Authorized>
+
+        <DataGrid TItem="DataForGrid"
+                  Data="GetAccount(context.User.Identity.Name)">
+            <DataGridColumn TItem="DataForGrid" Field="@nameof(DataForGrid.Name)" Caption="Nome" Editable="true" />
+            <DataGridNumericColumn TItem="DataForGrid" Field="@nameof(DataForGrid.AccountNumber)" Caption="Conta Numero" Editable="true" />
+            <DataGridNumericColumn TItem="DataForGrid" Field="@nameof(DataForGrid.AccountBalance)" Caption="Saldo" Editable="true" />
+        </DataGrid>
+
+    </Authorized>
+    <NotAuthorized>
+        <div>
+            <p>Realize Login para continuar navegando</p>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/Identity/Account/Login">Login</a>
+                </li>
+            </ul>
+            <p> Ou realize seu cadastro</p>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/Identity/Account/Register">Registrar</a>
+                </li>
+            </ul>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+
+    IEnumerable<DataForGrid> GetAccount(string dataItem)
+    {
+
+        //return _request.GetListData(dataItem);
+        var dados = new DataForGrid[]
+        {
+            new DataForGrid { Id = 1, Name = "Teste1", AccountNumber = 123456, AccountBalance = 150.10, email = "moregola@gmail.com" }
+            };
+
+
+        return dados;
+    }
+
+
+
+}
